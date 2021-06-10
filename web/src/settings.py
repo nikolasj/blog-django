@@ -51,6 +51,8 @@ ENABLE_RENDERING = int(os.environ.get('ENABLE_RENDERING', 1))
 
 USER_AVATAR_MAX_SIZE = 4.0
 
+FRONTEND_SITE = os.environ.get('FRONTEND_SITE')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

@@ -11,7 +11,9 @@ function singUp(e) {
     type: form.attr('method'),
     data: form.serialize(),
     success: function (data) {
-      console.log("SUCCESS", data)
+      console.log("SUCCESS", data);
+      let url = form.data('success');
+      window.location.href = url;
     },
     error: function (data) {
       errorProcess(data)
@@ -22,7 +24,7 @@ function singUp(e) {
 
 const class_name_for_error = 'has-error';
 
-function errorProcess(data){
+function errorProcess(data) {
   $(".help-block").remove();
   let list = ['#emailGroup', '#password1Group', '#password2Group', '#firstNameGroup', '#lastNameGroup'];
   for (let group of list) {
@@ -46,7 +48,7 @@ function errorProcess(data){
   }
 }
 
-function set_block_error(group, data){
+function set_block_error(group, data) {
   $(group).addClass(class_name_for_error);
-  $(group).append('<div class="help-block">'+ data +'</div>');
+  $(group).append('<div class="help-block">' + data + '</div>');
 }
