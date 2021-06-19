@@ -10,8 +10,10 @@ User = get_user_model()
 class CeleryService:
 
     @staticmethod
-    def send_password_reset(self, data: dict):
-        pass
+    def send_password_reset(**data):
+        subject = 'Password reset!'
+        template_name = 'auth_app/emails/reset_password.html'
+        send_information_email.delay(subject, template_name, **data)
 
     @staticmethod
     def send_email_confirm(user):

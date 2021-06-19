@@ -36,9 +36,9 @@ class PassResetForm(PasswordResetForm):
 
         data = {
             'to_email': email,
-            'content': {
+            'context': {
                 'user': user.get_full_name(),
                 'reset_url': url,
             }
         }
-        CeleryService.send_password_reset(data=data)
+        CeleryService.send_password_reset(**data)

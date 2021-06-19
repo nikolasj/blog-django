@@ -19,16 +19,16 @@ urlpatterns += [
     path('sign-in/', views.LoginView.as_view(), name='api_login'),
     path('sign-up/user/', views.SignUpView.as_view(), name='api_sign_up'),
     path('sign-up/verify/', views.VerifyEmailView.as_view(), name='api_sign_up_verify'),
-    path('password/reset/', views.PasswordResetView.as_view()),
-    path('password/reset/confirm/', views.PasswordResetConfirmView.as_view()),
+    path('password/reset/', views.PasswordResetView.as_view(), name='api_forgot_password'),
+    path('password/reset/confirm/', views.PasswordResetConfirmView.as_view(), name='reset_confirm'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
 ]
 
 urlpatterns += router.urls
 
-urlpatterns += [
-    path('password-reset/<uidb64>/<token>/', TemplateView.as_view(), name='password_reset_confirm'),
-]
+# urlpatterns += [
+#     path('password-reset/<uidb64>/<token>/', TemplateView.as_view(), name='password_reset_confirm'),
+# ]
 
 if settings.ENABLE_RENDERING:
     urlpatterns += [
@@ -40,4 +40,8 @@ if settings.ENABLE_RENDERING:
              name='verification_sent'),
         path('verify-email/<key>/', TemplateAPIView.as_view(template_name='auth_app/account_verification.html'),
              name='account_verification'),
+        path('recovery/', TemplateAPIView.as_view(template_name='auth_app/password_reset_send.html'),
+             name='reset_email_sent'),
+        path('password-reset/<uidb64>/<token>/', TemplateAPIView.as_view(template_name='auth_app/password_reset.html'),
+             name='password_reset_confirm'),
     ]
