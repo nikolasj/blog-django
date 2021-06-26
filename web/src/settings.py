@@ -12,7 +12,6 @@ from .additional_settings.jwt_settings import *
 from .additional_settings.summernote_settings import *
 from .additional_settings.smtp_settings import *
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -85,11 +84,10 @@ LOCAL_APPS = [
     'auth_app.apps.AuthAppConfig',
     'blog.apps.BlogConfig',
     'contact_us.apps.ContactUsConfig',
-
+    'user_profile.apps.UserProfileConfig',
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
-
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -161,7 +159,6 @@ DATABASES = {
     },
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -209,11 +206,11 @@ ROSETTA_MESSAGES_SOURCE_LANGUAGE_NAME = 'English'
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
 ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = False
 
-
 if JAEGER_AGENT_HOST := os.environ.get('JAEGER_AGENT_HOST'):
     from jaeger_client import Config
     from jaeger_client.config import DEFAULT_REPORTING_PORT
     from django_opentracing import DjangoTracing
+
     """If you don't need to trace all requests, comment middleware and set OPENTRACING_TRACE_ALL = False
         More information https://github.com/opentracing-contrib/python-django/#tracing-individual-requests
     """
@@ -237,6 +234,7 @@ if (SENTRY_DSN := os.environ.get('SENTRY_DSN')) and ENABLE_SENTRY:
     # More information on site https://sentry.io/
     from sentry_sdk import init
     from sentry_sdk.integrations.django import DjangoIntegration
+
     init(
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration()],

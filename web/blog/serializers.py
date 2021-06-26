@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from main.serializers import UserSerializer
+from user_profile.serializers import UserSerializer
 from .models import Category, Article, Comment
 
 

@@ -5,6 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from user_profile.models import Profile
 
 User = get_user_model()
 
@@ -22,12 +23,17 @@ class EmailsInline(admin.TabularInline):
         return False if obj else True
 
 
+class ProfileInline(admin.TabularInline):
+    model = Profile
+    can_delete = False
+
+
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     ordering = ('-id',)
     list_display = ('email', 'full_name', 'is_active', 'email_verified')
     search_fields = ('first_name', 'last_name', 'email')
-    inlines = (EmailsInline,)
+    inlines = (EmailsInline, ProfileInline)
 
     fieldsets = (
         (_('Personal info'), {'fields': ('id', 'first_name', 'last_name', 'email')}),

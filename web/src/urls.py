@@ -11,6 +11,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('auth/', include('auth_app.urls')),
     path('', include('blog.urls')),
+    path('', include('user_profile.urls')),
     path('', include('contact_us.urls')),
     path(f'{admin_url}/', admin.site.urls),
     path(f'{admin_url}/defender/', include('defender.urls')),
