@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from rest_framework.routers import DefaultRouter
 from main.views import TemplateAPIView
@@ -9,8 +9,11 @@ app_name = 'contact_us'
 
 router = DefaultRouter()
 
+# router.register(r'upload', views.UploadViewSet, basename="upload")
+
 urlpatterns = [
-    path('feedback/', views.FeedbackView.as_view(), name='feedback')
+    path('feedback/', views.FeedbackView.as_view(), name='feedback'),
+    # path('', include(router.urls)),
 ]
 
 urlpatterns += router.urls

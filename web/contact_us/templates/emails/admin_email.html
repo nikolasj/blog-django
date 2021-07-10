@@ -1,0 +1,11 @@
+{% extends 'emails/main_template.html' %}
+
+{% block content %}
+<p>Hello from {{ site_name }}!</p>
+<br>
+<p>check the review
+</p>
+<a href="{{ feedback_url }}">feedback_url</a>
+<br>
+<p>Thank you! {{ site_name }}!</p>
+{% endblock content %}

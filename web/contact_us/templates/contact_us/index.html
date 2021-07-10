@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static i18n %}
 {% block active_contact %}class="active"{% endblock active_contact %}
 
 {% block header %}
@@ -11,14 +12,23 @@
 
 <div class="row">
   <div class="col-md-8">
-    <form action="{% url 'contact_us:feedback' %}" method="post">
+    <form action="{% url 'contact_us:feedback' %}" id="feedbackForm" enctype="multipart/form-data" method="post">
       {% csrf_token %}
       {% if not user.is_authenticated %}
+      <div id="nameGroup">
       <input class="form-control" name="name" placeholder="Name..."/><br/>
+        </div>
+      <div id="emailGroup">
       <input class="form-control" name="email" placeholder="E-mail..."/><br/>
+        </div>
       {% endif %}
+      <div id="contentGroup">
       <textarea class="form-control" name="content" placeholder="How can we help you?"
                 style="height:150px;"></textarea><br/>
+      </div>
+      <div id="fileGroup">
+      <input type="file" name="file" id="file">
+      </div>
       <input class="btn btn-primary" type="submit" value="Send"/><br/><br/>
     </form>
   </div>
@@ -47,3 +57,6 @@
   </div>
 </div>
 {% endblock container %}
+{% block jquery %}
+$.getScript('{% static 'contact_us/js/feedback.js' %}');
+{% endblock %}
