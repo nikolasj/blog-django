@@ -1,7 +1,13 @@
 <!-- the comment box -->
 <div class="well">
   <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
-  <form role="form">
+  <form role="form" action="{% url 'blog:comment-list' %}" id="commentForm" method="post">
+    {% csrf_token %}
+    {% if not user.is_authenticated %}
+    <div id="emailGroup">
+        <input class="form-control" name="email" placeholder="E-mail..."/><br/>
+    </div>
+    {% endif %}
     <div class="form-group">
       <textarea class="form-control" rows="3"></textarea>
     </div>

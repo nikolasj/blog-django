@@ -25,6 +25,8 @@ AUTH_USER_MODEL = 'main.User'
 SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', 'test@test.com')
 SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', 'tester26')
 
+ADMIN_EMAILS = ['alsam1992@yandex.ru']
+
 MICROSERVICE_TITLE = os.environ.get('MICROSERVICE_TITLE', 'Template')
 GITHUB_URL = os.environ.get('GITHUB_URL', 'https://github.com')
 
@@ -116,6 +118,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
 }
 if ENABLE_RENDERING:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
