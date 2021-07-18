@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Contact Us Success{% endblock %}
+
+{% block header %}
+{% include 'includes/header.html'  with selected='contact_us' %}
+{% endblock header %}
+
+{% block container %}
+    <h2 class="title">Thanks!</h2>
+
+    <p>We appreciate your feedback.<br />
+    Someone from the team will be in touch with you shortly.</p>
+
+    <div><a href="/">Home Page</a></div>
+{% endblock container %}

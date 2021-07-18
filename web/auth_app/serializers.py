@@ -61,6 +61,7 @@ class LoginSerializer(auth_serializers.LoginSerializer):
     email = serializers.EmailField()
 
     def validate(self, attrs):
+        print("login", attrs)
         email = attrs.get('email')
         password = attrs.get('password')
         user = self._validate_email(email, password)

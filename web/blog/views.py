@@ -1,7 +1,8 @@
 import logging
 from rest_framework.permissions import AllowAny
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from main.pagination import BasePageNumberPagination
+from rest_framework.mixins import CreateModelMixin
 
 from .services import BlogService
 from .filters import ArticleFilter
@@ -27,6 +28,7 @@ class CategoryViewSet(ViewSet):
 
 class ArticleViewSet(ViewSet):
     filterset_class = ArticleFilter
+    pagination_class = BasePageNumberPagination
 
     def get_template_name(self):
         if self.action == 'list':
@@ -51,3 +53,8 @@ class ArticleViewSet(ViewSet):
         response = super().retrieve(request, **kwargs)
         response.template_name = self.get_template_name()
         return response
+
+
+class CommentViewSet(CreateModelMixin, GenericViewSet):
+    serializer_class = serializers.CommentSerializer
+    permission_classes = (AllowAny,)

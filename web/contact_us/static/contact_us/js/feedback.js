@@ -35,11 +35,11 @@ function feedback(e) {
     processData: false,
     success: function (data) {
       console.log("SUCCESS", data);
-      // let url = form.data('success');
-      // window.location.href = url;
+      let url = form.data('success');
+      window.location.href = url;
     },
     error: function (data) {
-      errorProcess(data)
+      errorProcess(data);
     }
   })
   console.log('here')

@@ -15,3 +15,5 @@ class Profile(models.Model):
     birthday = models.DateField(null=True, blank=True)
     website = models.URLField(default="", blank=True)
     avatar = models.ImageField(upload_to=upload_to, default='avatar/no_avatar.png', blank=True)
+
+    objects = models.Manager()

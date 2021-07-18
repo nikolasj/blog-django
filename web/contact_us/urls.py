@@ -21,5 +21,6 @@ urlpatterns += router.urls
 if settings.ENABLE_RENDERING:
     urlpatterns += [
         path('contact/', TemplateAPIView.as_view(template_name='contact_us/index.html'), name='index'),
-
+        path('contact-success/', TemplateAPIView.as_view(template_name='contact_us/contact_success.html'),
+             name='contact_success'),
     ]
