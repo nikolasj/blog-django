@@ -34,17 +34,11 @@
         </div>
         <div class="row post-content">
           <div class="col-md-3">
-            <a href="#">
-              <img
-                src="http://4.bp.blogspot.com/-_lqoNpVXeU4/UkxQ7N-QW8I/AAAAAAAACTw/pni-TZyp17o/s1600/cool+share+button+effects+styles.png"
-                alt="" class="img-responsive">
-            </a>
-          </div>
+                <a href="#"><img src="{{ article.image }}" alt="" class="img-responsive" width="200" height="100"></a>
+              </div>
           <div class="col-md-9">
             <p>
-              Lorem ipsum dolor sit amet, id nec conceptam conclusionemque. Et eam tation option.
-              Utinam salutatus ex eum. Ne mea dicit tibique facilisi, ea mei omittam explicari
-              conclusionemque, ad nobis propriae quaerendum sea.
+              {{ article.content|safe |truncatewords_html:20 }}
             </p>
             <p>
               <a class="btn btn-read-more" href="{{ article.url }}">Read more</a>

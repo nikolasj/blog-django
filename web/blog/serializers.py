@@ -4,8 +4,17 @@ from user_profile.serializers import UserSerializer
 from .models import Category, Article, Comment
 
 
+class CommentChildSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        read_only_fields = ('user',)
+        fields = ('id', 'user', 'author', 'content', 'updated')
+
+
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.EmailField(required=False)
+    child = CommentChildSerializer(source='children', many=True)
+    parent_id = serializers.IntegerField(default=None, min_value=1, write_only=True)
 
     def validate(self, attrs: dict) -> dict:
         user = self.context['request'].user
@@ -24,7 +33,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         read_only_fields = ('user',)
-        fields = ('id', 'article', 'user', 'author', 'content', 'updated')
+        fields = ('id', 'article', 'user', 'author', 'content', 'updated', 'parent_id', 'child')
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -43,11 +52,18 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('title', 'url', 'author', 'category', 'created', 'updated', 'comments_count')
+        fields = ('id', 'title', 'url', 'author', 'image', 'category', 'created', 'updated', 'comments_count')
 
 
 class FullArticleSerializer(ArticleSerializer):
-    comments = CommentSerializer(source='comment_set', many=True)
+    # comments = CommentSerializer(source='comment_set', many=True)
+    comments = serializers.SerializerMethodField(method_name='get_parent_comments')
+
+    def get_parent_comments(self, obj):
+        queryset = obj.comment_set.filter(parent_id__isnull=True)
+        serializer = CommentSerializer(queryset, source='comment_set', many=True)
+
+        return serializer.data
 
     class Meta(ArticleSerializer.Meta):
         fields = ArticleSerializer.Meta.fields + ('content', 'comments',)

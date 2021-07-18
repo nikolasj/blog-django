@@ -58,3 +58,7 @@ class ArticleViewSet(ViewSet):
 class CommentViewSet(CreateModelMixin, GenericViewSet):
     serializer_class = serializers.CommentSerializer
     permission_classes = (AllowAny,)
+
+    # def get_queryset(self):
+    #     comments =
+    #     return
