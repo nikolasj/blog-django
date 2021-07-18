@@ -22,7 +22,6 @@ function login(e) {
   $(formdata ).each(function(index, obj){
     data[obj.name] = obj.value;
   });
-  // console.log(data);
   let d_ = JSON.stringify(data);
   // console.log("login", d_);
   $.ajax({
