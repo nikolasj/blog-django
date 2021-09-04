@@ -87,6 +87,7 @@ LOCAL_APPS = [
     'blog.apps.BlogConfig',
     'contact_us.apps.ContactUsConfig',
     'user_profile.apps.UserProfileConfig',
+    'actions.apps.ActionsConfig',
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
@@ -118,9 +119,6 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ]
 }
 if ENABLE_RENDERING:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (

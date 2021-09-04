@@ -13,8 +13,8 @@ class CommentChildSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.EmailField(required=False)
-    child = CommentChildSerializer(source='children', many=True)
-    parent_id = serializers.IntegerField(default=None, min_value=1, write_only=True)
+    child = CommentChildSerializer(source='children', many=True, read_only=True)
+    parent_id = serializers.IntegerField(default=None, write_only=True)
 
     def validate(self, attrs: dict) -> dict:
         user = self.context['request'].user

@@ -12,7 +12,7 @@ router.register('posts', views.ArticleViewSet, basename='post')
 router.register('comment', views.CommentViewSet, basename='comment')
 
 urlpatterns = [
-
+    # path('comment/<article_id>/', views.CommentViewSet.as_view({'get': 'list'}), name='article_comments'),
 ]
 
 urlpatterns += router.urls

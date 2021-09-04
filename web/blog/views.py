@@ -3,6 +3,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from main.pagination import BasePageNumberPagination
 from rest_framework.mixins import CreateModelMixin
+from rest_framework.response import Response
+from rest_framework import status
 
 from .services import BlogService
 from .filters import ArticleFilter
@@ -59,6 +61,10 @@ class CommentViewSet(CreateModelMixin, GenericViewSet):
     serializer_class = serializers.CommentSerializer
     permission_classes = (AllowAny,)
 
-    # def get_queryset(self):
-    #     comments =
-    #     return
+    # pagination_class = BasePageNumberPagination
+    #
+    # def create(self, request, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
