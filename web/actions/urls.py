@@ -8,7 +8,7 @@ app_name = 'actions'
 router = DefaultRouter()
 
 urlpatterns = [
-
+    path('like/', views.LikeDislikeView.as_view(), name='like')
 ]
 
 urlpatterns += router.urls

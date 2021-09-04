@@ -11,8 +11,7 @@ User = get_user_model()
 
 def like_limit():
     return (
-        models.Q(app_label='blog', model='article') |
-        models.Q(app_label='blog', model='comment')
+        models.Q(app_label='blog', model='article') | models.Q(app_label='blog', model='comment')
     )
 
 
@@ -24,5 +23,4 @@ class LikeDislike(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
 
-
-
+    objects = models.Manager()

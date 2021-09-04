@@ -3,9 +3,12 @@ from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from rest_framework.reverse import reverse_lazy
+from django.contrib.contenttypes.fields import GenericRelation
 
+from actions.models import LikeDislike
 from . import managers
 from .choices import ArticleStatus
+from actions.choices import LikeDislikeChoice
 
 User = get_user_model()
 
@@ -39,6 +42,7 @@ class Article(models.Model):
     status = models.PositiveSmallIntegerField(choices=ArticleStatus.choices, default=ArticleStatus.INACTIVE)
     image = models.ImageField(upload_to='articles/', blank=True, default='no-image-available.jpg')
     objects = models.Manager()
+    votes = GenericRelation(LikeDislike, related_query_name='articles')
 
     @property
     def short_title(self):
@@ -60,6 +64,12 @@ class Article(models.Model):
         verbose_name_plural = _('Articles')
         ordering = ('-updated', '-created', 'id')
 
+    def likes(self) -> int:
+        return self.votes.filter(vote=LikeDislikeChoice.LIKE).count()
+
+    def dislikes(self) -> int:
+        return self.votes.filter(vote=LikeDislikeChoice.DISLIKE).count()
+
 
 class Comment(models.Model):
     author = models.EmailField()
@@ -69,7 +79,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
-
+    votes = GenericRelation(LikeDislike, related_query_name='comments')
     objects = models.Manager()
 
     class Meta:
@@ -79,3 +89,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return '{author}: {article}'.format(author=self.author, article=self.article.title)
+
+    def likes(self) -> int:
+        return self.votes.objects.filter(vote=LikeDislikeChoice.LIKE).count()
+
+    def dislikes(self) -> int:
+        return self.votes.objects.filter(vote=LikeDislikeChoice.DISLIKE).count()

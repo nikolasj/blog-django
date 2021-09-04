@@ -10,4 +10,12 @@ from . import serializers
 
 logger = logging.getLogger(__name__)
 
-# Create your views here.
+
+class LikeDislikeView(GenericAPIView):
+    serializer_class = serializers.LikeDislikeSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.save()
+        return Response(data, status.HTTP_200_OK)

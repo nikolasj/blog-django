@@ -14,6 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProfileView(GenericViewSet):
+    template_name = 'user_profile/profile.html'
+
     def get_serializer_class(self):
         return serializers.UserSerializer
 
@@ -22,4 +24,4 @@ class ProfileView(GenericViewSet):
 
     def retrieve(self, request):
         serializer = self.get_serializer(self.get_object())
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK, template_name=self.template_name)

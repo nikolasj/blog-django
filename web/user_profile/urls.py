@@ -8,7 +8,7 @@ app_name = 'user_profile'
 router = DefaultRouter()
 
 urlpatterns = [
-    path('profile/', views.ProfileView.as_view({'get': 'retrieve'}))
+    path('profile/', views.ProfileView.as_view({'get': 'retrieve'}), name='profile')
 ]
 
 urlpatterns += router.urls
