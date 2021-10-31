@@ -26,5 +26,7 @@ class User(AbstractUser):
         return super().get_full_name()
 
     def email_verified(self):
+        print(self.emailaddress_set.all())
+        print(self.id)
         return self.emailaddress_set.get(primary=True).verified
     email_verified.boolean = True

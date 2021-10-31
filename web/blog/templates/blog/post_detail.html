@@ -19,7 +19,15 @@
     <p><i class="fa fa-tags"></i> Tags: <a href=""><span class="badge badge-info">Bootstrap</span></a> <a
       href=""><span class="badge badge-info">Web</span></a> <a href=""><span class="badge badge-info">CSS</span></a>
       <a href=""><span class="badge badge-info">HTML</span></a></p>
-
+    <div>
+      <button class="btn btn-success" id="like-article" data-type="article" data-vote="1" data-id="{{ id }}"
+              data-href="{% url 'actions:like' %}">like ({{ likes }})
+      </button>
+      <button class="btn btn-success" id="dislike-article" data-type="article" data-vote="0" data-id="{{ id }}"
+              data-href="{% url 'actions:like' %}">dislike ({{ dislikes }})
+      </button>
+    </div>
+    <br>
     <img src="{{ image }}" class="img-responsive" width="200" height="200">
     <hr>
     <p class="lead">
@@ -42,4 +50,5 @@
 
 {% block jquery %}
 $.getScript('{% static 'blog/js/detail.js' %}');
+$.getScript('{% static 'actions/js/likes.js' %}');
 {% endblock %}
