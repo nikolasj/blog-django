@@ -6,13 +6,12 @@ from .managers import UserManager
 
 
 class User(AbstractUser):
-
     username = None
     email = models.EmailField(_('Email address'), unique=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-
+    following = models.ManyToManyField('self', through='actions.Follower', symmetrical=False, related_name='followers')
     objects = UserManager()
 
     class Meta:
@@ -29,4 +28,5 @@ class User(AbstractUser):
         print(self.emailaddress_set.all())
         print(self.id)
         return self.emailaddress_set.get(primary=True).verified
+
     email_verified.boolean = True

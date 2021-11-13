@@ -17,10 +17,23 @@ def like_limit():
 
 class LikeDislike(models.Model):
     vote = models.PositiveSmallIntegerField(choices=LikeDislikeChoice.choices)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
     date = models.DateTimeField(auto_now=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to=like_limit)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
 
     objects = models.Manager()
+
+
+class Follower(models.Model):
+    subscriber = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rel_from')
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rel_to')
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+    objects = models.Manager()
+
+    class Meta:
+        ordering = ('-created',)
+        constraints = [
+            models.UniqueConstraint(fields=['subscriber', 'to_user'], name='unique subscriber with to_user')
+        ]

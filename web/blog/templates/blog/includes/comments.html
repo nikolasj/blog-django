@@ -35,10 +35,11 @@
        <h6 class="comment-name by-author"><a href="#">{{ comment.author }}</a></h6>
        <span>{{ comment.updated | date_time }}</span>
               <a href="#formReview" onclick="addParentToComment('{{ comment.author }}', '{{ comment.id }}')"><i class="fa fa-reply"></i></a>
-               <i class="fa fa-heart commentLike" id="like-comment"
+           <i  class="fa commentLike {% if comment.likes %} fa-heart {% else %} fa-adn {% endif  %}" id="like-comment"
                   data-id="{{ comment.id }}" data-vote=1
                   data-href="{% url 'actions:like' %}"
                   data-type="comment"></i>
+        <i class="count" id="likeCount_{{ comment.id }}">{{ comment.likes }}</i>
       </div>
       <div class="comment-content">
        {{ comment.content }}

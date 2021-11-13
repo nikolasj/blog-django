@@ -3,7 +3,7 @@ from typing import Union
 from django.contrib.contenttypes.models import ContentType
 from blog.models import Article, Comment
 from main.decorators import except_shell
-from .models import LikeDislike
+from .models import LikeDislike, Follower
 
 
 class ActionsService:
@@ -14,3 +14,15 @@ class ActionsService:
         print(user, model_obj, object_id)
         content_type = ContentType.objects.get_for_model(model_obj)
         return LikeDislike.objects.get(user=user, content_type=content_type, object_id=object_id)
+
+    @staticmethod
+    def is_user_subscribed(subscriber, user_id: int) -> bool:
+        return Follower.objects.filter(subscriber=subscriber, to_user_id=user_id).exists()
+
+    @staticmethod
+    def unfollow(subscriber, user_id: int):
+        Follower.objects.filter(subscriber=subscriber, to_user_id=user_id).delete()
+
+    @staticmethod
+    def follow(subscriber, user_id: int):
+        return Follower.objects.create(subscriber=subscriber, to_user_id=user_id)

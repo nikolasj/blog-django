@@ -8,7 +8,8 @@ app_name = 'actions'
 router = DefaultRouter()
 
 urlpatterns = [
-    path('like/', views.LikeDislikeView.as_view(), name='like')
+    path('like/', views.LikeDislikeView.as_view(), name='like'),
+    path('follow/', views.FollowViewSet.as_view({'post': 'create'}), name='follow')
 ]
 
 urlpatterns += router.urls

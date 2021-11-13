@@ -15,3 +15,14 @@ class LikeObjectChoice(TextChoices):
 class FollowIconStatus(TextChoices):
     FOLLOW = ('Follow', _('Follow'))
     UNFOLLOW = ('Unfollow', _('Unfollow'))
+
+
+class LikeIconStatus(TextChoices):
+    LIKED = ('liked', _('Liked'))
+    DISLIKED = ('disliked', _('Disliked'))
+    UNDONE = ('undone', _('Undone'))
+
+
+class LikeStatus(IntegerChoices):
+    LIKE = (1, _('Like'))
+    DISLIKE = (-1, _('Dislike'))

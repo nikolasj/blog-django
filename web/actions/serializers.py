@@ -41,3 +41,16 @@ class LikeDislikeSerializer(serializers.Serializer):
             'count_like': obj.likes(),
             'count_dislike': obj.dislikes()
         }
+
+
+class FollowSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField(min_value=1)
+
+    def save(self):
+        subscriber = self.context['request'].user
+        user_id = self.validated_data['user_id']
+        if ActionsService.is_user_subscribed(subscriber, user_id):
+            ActionsService.unfollow(subscriber, user_id)
+        else:
+            ActionsService.follow(subscriber, user_id)
+

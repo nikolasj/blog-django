@@ -20,12 +20,24 @@
       href=""><span class="badge badge-info">Web</span></a> <a href=""><span class="badge badge-info">CSS</span></a>
       <a href=""><span class="badge badge-info">HTML</span></a></p>
     <div>
-      <button class="btn btn-success" id="like-article" data-type="article" data-vote="1" data-id="{{ id }}"
-              data-href="{% url 'actions:like' %}">like ({{ likes }})
-      </button>
-      <button class="btn btn-success" id="dislike-article" data-type="article" data-vote="0" data-id="{{ id }}"
-              data-href="{% url 'actions:like' %}">dislike ({{ dislikes }})
-      </button>
+      <ul>
+        <li id="likeArticle" data-href="{% url 'actions:like' %}" data-id="{{ id }}" data-type="article"
+            data-vote=1 title="{% trans 'Like' %}">
+          <i id="articleLikeIcon"
+                  {% if like_status == 'liked' %} class="fas fa-thumbs-up"
+                  {% else %} class="far fa-thumbs-up"
+                  {% endif %}>
+          </i><span id="articleLikeCount"> {{ likes }}</span>
+        </li>
+        <li id="dislikeArticle" data-href="{% url 'actions:like' %}" data-id="{{ id }}" data-type="article"
+            data-vote=0 title="{% trans 'Dislike' %}">
+          <i id="articleDislikeIcon"
+                  {% if like_status == 'disliked' %} class="fas fa-thumbs-down"
+                  {% else %} class="far fa-thumbs-down"
+                  {% endif %}>
+          </i><span id="articleDislikeCount"> {{ dislikes }}</span>
+        </li>
+      </ul>
     </div>
     <br>
     <img src="{{ image }}" class="img-responsive" width="200" height="200">

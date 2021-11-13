@@ -59,12 +59,12 @@ class UserImageSerializer(serializers.ModelSerializer):
 
 
 class UpdateUserProfileSerializer(serializers.ModelSerializer):
-    birthday = serializers.DateField(source='profile.birthday')
-    gender = serializers.ChoiceField(source='profile.gender', choices=GenderChoice.choices)
+    # birthday = serializers.DateField(source='profile.birthday')
+    gender = serializers.ChoiceField(source='profile.gender', choices=GenderChoice.choices, read_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'birthday', 'gender')
+        fields = ('id', 'first_name', 'last_name', 'gender')
 
 
 class UserListSerializer(serializers.ModelSerializer):
