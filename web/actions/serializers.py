@@ -1,9 +1,12 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from blog.models import Article, Comment
-from .choices import LikeDislikeChoice, LikeObjectChoice
+from .choices import LikeDislikeChoice, LikeObjectChoice, FollowIconStatus
 from blog.services import BlogService
 from .services import ActionsService
+
+User = get_user_model()
 
 
 # Create your serializers here.
@@ -46,11 +49,29 @@ class LikeDislikeSerializer(serializers.Serializer):
 class FollowSerializer(serializers.Serializer):
     user_id = serializers.IntegerField(min_value=1)
 
+    def validate(self, data: dict):
+        if not ActionsService.is_user_exists(data['user_id']):
+            raise serializers.ValidationError({'user_id': 'User does not exist.'})
+        return data
+
+    def validate_user_id(self, user_id: int):
+        if not ActionsService.is_user_exists(user_id):
+            raise serializers.ValidationError('User does not exist.')
+        return user_id
+
     def save(self):
         subscriber = self.context['request'].user
         user_id = self.validated_data['user_id']
+
         if ActionsService.is_user_subscribed(subscriber, user_id):
             ActionsService.unfollow(subscriber, user_id)
+            return {'status': 200, 'status_icon': FollowIconStatus.FOLLOW}
         else:
             ActionsService.follow(subscriber, user_id)
+            return {'status': 201, 'status_icon': FollowIconStatus.UNFOLLOW}
 
+
+class UserFollowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'full_name')

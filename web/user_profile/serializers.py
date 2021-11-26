@@ -73,7 +73,7 @@ class UserListSerializer(serializers.ModelSerializer):
 
     def get_follow_status(self, obj) -> str:
         user = self.context['request'].user
-        is_follow = ActionsService.is_user_followed(user, obj.id)
+        is_follow = ActionsService.is_user_subscribed(user, obj.id)
         return FollowIconStatus.UNFOLLOW if is_follow else FollowIconStatus.FOLLOW
 
     class Meta:
