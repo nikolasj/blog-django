@@ -10,8 +10,8 @@ function singUp(e) {
     url: form.attr('action'),
     type: form.attr('method'),
     data: form.serialize(),
-    contentType: 'application/json',
-    processData: false,
+    // contentType: 'application/json',
+    // processData: false,
     success: function (data) {
       console.log("SUCCESS", data);
       let url = form.data('success');

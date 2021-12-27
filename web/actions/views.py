@@ -1,16 +1,14 @@
 import logging
-from django.utils.translation import gettext_lazy as _
-from drf_yasg.utils import swagger_auto_schema
-from requests import request
-from rest_framework.generics import GenericAPIView
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.mixins import CreateModelMixin, ListModelMixin
 
-from .services import ActionsService
-from . import serializers
 from main.pagination import BasePageNumberPagination
+from rest_framework import status
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
+
+from . import serializers
+from .services import ActionsService
 
 logger = logging.getLogger(__name__)
 

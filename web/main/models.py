@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from rest_framework.reverse import reverse
 
 from .managers import UserManager
 
@@ -28,5 +29,14 @@ class User(AbstractUser):
         print(self.emailaddress_set.all())
         print(self.id)
         return self.emailaddress_set.get(primary=True).verified
+
+    def get_absolute_url(self) -> str:
+        return reverse('user_profile:user_by_id', args=[self.pk])
+
+    def followers_count(self) -> int:
+        return self.followers.count()
+
+    def following_count(self) -> int:
+        return self.following.count()
 
     email_verified.boolean = True

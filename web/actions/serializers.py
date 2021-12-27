@@ -72,6 +72,9 @@ class FollowSerializer(serializers.Serializer):
 
 
 class UserFollowSerializer(serializers.ModelSerializer):
+    profile_url = serializers.CharField(source='get_absolute_url')
+    avatar = serializers.URLField(source='profile.avatar.url')
+
     class Meta:
         model = User
-        fields = ('id', 'full_name')
+        fields = ('id', 'full_name', 'profile_url', 'avatar')

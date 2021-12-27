@@ -9,15 +9,68 @@ $(function () {
 
 
 function followers(e) {
-  let button = $(this);
-  $('#followerModal').modal('show');
-  console.log('followers api');
+  let button = $(this)
+  console.log(button.data('href'))
+   $.ajax({
+    type: 'GET',
+    url: button.data('href'),
+    success: function (data) {
+        renderModal(data, button)
+        $('#followerModal').modal('show');
+    },
+    error: function (data) {
+      console.log('error', data)
+    }
+  })
 }
 
 function following(e) {
   let button = $(this);
-  $('#followerModal').modal('show');
+  // $('#followingModal').modal('show');
   console.log('following api');
+  $.ajax({
+    type: 'GET',
+    url: button.data('href'),
+    success: function (data) {
+        renderModal(data, button)
+        $('#followerModal').modal('show');
+    },
+    error: function (data) {
+      console.log('error', data)
+    }
+  })
+}
+
+function renderModal(data, button) {
+  $('#followModalTitle').text(button.text())
+  followBodyRender(data, button)
+
+}
+
+function followBodyRender(data, button) {
+  user_list = data.results
+  let body = $('#followModalBody')
+  let followUrl = button.data('follow-actions')
+
+  body.empty()
+  $.each(user_list, function(i){
+   let isShowFollowButton = !!user_list[i].follow
+   console.log(isShowFollowButton)
+   var templateString = `
+      <div class="user">
+        <p>
+          <img src="${user_list[i].avatar}" class="avatar img-circle img-thumbnail" width=50px>
+          <a href='${user_list[i].profile_url}'> ${user_list[i].full_name} </a>
+          ${isShowFollowButton ? `
+            <button class="btn btn-primary followMe" data-id="${user_list[i].id}" data-href='${followUrl}'> ${user_list[i].follow} </button>
+          ` : ''}
+        </p>
+      </div>
+   `
+   body.append(templateString);
+  })
+   $(".followMe").click(followMe);
+
 }
 
 function profileUpdate(e) {
